@@ -10,16 +10,16 @@ import { RootState } from "../../../redux/store";
 const PieCharts = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
-  const { isLoading, data, isError } = usePieQuery(user?._id);
+  const { isLoading, data, isError } = usePieQuery(user?._id as string);
 
-  const pie = data?.charts!;
+  const pie = data?.charts;
 
-  const order = pie?.orderFullFillment!;
-  const productCategories = pie?.productCategories!;
-  const stock = pie?.stockAvailability!;
-  const revenue = pie?.revenueDistribution!;
-  const ageGroup = pie?.usersAgeGroup!;
-  const adminCustomer = pie?.adminCustomer!;
+  const order = pie?.orderFullFillment;
+  const productCategories = pie?.productCategories;
+  const stock = pie?.stockAvailability;
+  const revenue = pie?.revenueDistribution;
+  const ageGroup = pie?.usersAgeGroup;
+  const adminCustomer = pie?.adminCustomer;
 
   if (isError) {
     return <Navigate to={"/admin/dashboard"} />;
@@ -40,7 +40,7 @@ const PieCharts = () => {
               <div>
                 <PieChart
                   labels={["Processing", "Shipped", "Delivered"]}
-                  data={[order.processing, order.shipped, order.delivered]}
+                  data={[order!.processing, order!.shipped, order!.delivered]}
                   backgroundColor={[
                     `hsl(110,80%, 80%)`,
                     `hsl(110,80%, 50%)`,
@@ -55,13 +55,13 @@ const PieCharts = () => {
             <section>
               <div>
                 <DoughnutChart
-                  labels={productCategories.map((i) => Object.keys(i)[0])}
-                  data={productCategories.map((i) => Object.values(i)[0])}
+                  labels={productCategories!.map((i) => Object.keys(i)[0])}
+                  data={productCategories!.map((i) => Object.values(i)[0])}
                   backgroundColor={categories.map(
                     (i) =>
-                      `hsl(${Object.values(i)[0] * Math.random() * 4}, ${
-                        Object.values(i)[0]
-                      }%, 50%)`
+                      `hsl(${
+                        Number(Object.values(i)[0]) * Math.random() * 4
+                      }, ${Object.values(i)[0]}%, 50%)`
                   )}
                   legends={false}
                   offset={[0, 0, 0, 80]}
@@ -74,7 +74,7 @@ const PieCharts = () => {
               <div>
                 <DoughnutChart
                   labels={["In Stock", "Out Of Stock"]}
-                  data={[stock.inStock, stock.outOfStock]}
+                  data={[stock!.inStock, stock!.outOfStock]}
                   backgroundColor={["hsl(269,80%,40%)", "rgb(53, 162, 255)"]}
                   legends={false}
                   offset={[0, 80]}
@@ -95,11 +95,11 @@ const PieCharts = () => {
                     "Net Margin",
                   ]}
                   data={[
-                    revenue.marketingCost,
-                    revenue.discount,
-                    revenue.burnt,
-                    revenue.productionCost,
-                    revenue.netMargin,
+                    revenue!.marketingCost,
+                    revenue!.discount,
+                    revenue!.burnt,
+                    revenue!.productionCost,
+                    revenue!.netMargin,
                   ]}
                   backgroundColor={[
                     "hsl(110,80%,40%)",
@@ -123,7 +123,7 @@ const PieCharts = () => {
                     "Adult (20-40)",
                     "Older (above 40)",
                   ]}
-                  data={[ageGroup.teen, ageGroup.adult, ageGroup.old]}
+                  data={[ageGroup!.teen, ageGroup!.adult, ageGroup!.old]}
                   backgroundColor={[
                     `hsl(10, ${80}%, 80%)`,
                     `hsl(10, ${80}%, 50%)`,
@@ -139,7 +139,7 @@ const PieCharts = () => {
               <div>
                 <DoughnutChart
                   labels={["Admin", "Customers"]}
-                  data={[adminCustomer.admin, adminCustomer.customer]}
+                  data={[adminCustomer!.admin, adminCustomer!.customer]}
                   backgroundColor={[`hsl(335, 100%, 38%)`, "hsl(44, 98%, 50%)"]}
                   offset={[0, 50]}
                 />

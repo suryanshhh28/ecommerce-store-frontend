@@ -40,7 +40,9 @@ const TransactionManagement = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const { isLoading, data, isError, error } = useOrderDetailsQuery(params?.id!);
+  const { isLoading, data, isError } = useOrderDetailsQuery(
+    params?.id as string
+  );
 
   const {
     shippingInfo: { address, city, state, country, pinCode },
@@ -59,16 +61,16 @@ const TransactionManagement = () => {
 
   const updateHandler = async () => {
     const res = await updateOrder({
-      userId: user?._id!,
-      orderId: data?.order._id!,
+      userId: user?._id as string,
+      orderId: data?.order._id as string,
     });
     responseToast(res, navigate, "/admin/transaction");
   };
 
   const deleteHandler = async () => {
     const res = await deleteOrder({
-      userId: user?._id!,
-      orderId: data?.order._id!,
+      userId: user?._id as string,
+      orderId: data?.order._id as string,
     });
     responseToast(res, navigate, "/admin/transaction");
   };

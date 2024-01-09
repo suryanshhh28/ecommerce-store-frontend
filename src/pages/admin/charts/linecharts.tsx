@@ -13,7 +13,7 @@ const { last12Months } = getLastMonths();
 const Linecharts = () => {
   const { user } = useSelector((state: RootState) => state.userReducer);
 
-  const { isLoading, data, error, isError } = useLineQuery(user?._id);
+  const { isLoading, data, error, isError } = useLineQuery(user?._id as string);
 
   const line = data?.charts;
 

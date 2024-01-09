@@ -53,7 +53,9 @@ const Transaction = () => {
     (state: { userReducer: UserReducerInitialState }) => state.userReducer
   );
 
-  const { isLoading, data, isError, error } = useAllOrdersQuery(user?._id!);
+  const { isLoading, data, isError, error } = useAllOrdersQuery(
+    user?._id as string
+  );
 
   if (isError) {
     const err = error as CustomError;
